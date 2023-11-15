@@ -1,5 +1,6 @@
 <?php
 
+use Framework\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 // use Symfony\Component\HttpFoundation\Session\Session;
@@ -30,12 +31,12 @@ function renderTemplate(string $view, array $props) : Response {
     return new Response(ob_get_clean());
 }
 
-class HelloController {
+class HelloController extends BaseController {
     public static function GET(Request $request) : Response {
         return renderTemplate("hello", ["name" => $request->attributes->get("name")]);
     }
 
-    public static function POST() : Response {
+    public static function POST(Request $request) : Response {
         return renderTemplate("hello", ["name" => "success", "layoutTitle" => "POST"]);
     }
 }

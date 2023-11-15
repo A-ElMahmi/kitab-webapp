@@ -1,13 +1,13 @@
 <?php
 
+use Framework\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class LoginController {
+class LoginController extends BaseController {
     public static function GET(Request $request) : Response {
-        // $redirectURL = $request->query->get("redirect");
-        $redirectURL = "/login";
+        $redirectURL = $request->query->get("redirect");
 
         return new Response('
             <form action="/login" method="post">
@@ -25,7 +25,7 @@ class LoginController {
             return new RedirectResponse(base64_decode($redirectURL));
         }
 
-        return new Response('Logged in successfully <a href="/secret">Secret</a>');
+        return new Response('Logged in successfully <a href="/secret">Secret</a> | <a href="/hello">Home</a>');
     }
 }
 

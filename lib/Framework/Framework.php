@@ -5,25 +5,22 @@ use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use TypeError;
-use ValueError;
+use Symfony\Component\Routing;
+
 
 class Framework {
-    public function __construct(private UrlMatcher $matcher) {
+    public function __construct(private Routing\Matcher\UrlMatcher $matcher) {
         // session_start();
     }
-
+    
     public function handle(Request $request) : Response {
         try {
             $request->attributes->add($this->matcher->match(($request->getPathInfo())));
             $controller = $request->attributes->get("_route");
+            $requestMethod = $request->server->get("REQUEST_METHOD");
 
-            return call_user_func($controller, $request);
-        } catch (ResourceNotFoundException) {
+            return call_user_func([$controller, $requestMethod], $request);
+        } catch (Routing\Exception\ResourceNotFoundException) {
             return new Response("Page Not Found", 404);
         } catch (Exception) {
             return new Response("An error occured", 500);
