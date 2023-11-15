@@ -31,13 +31,8 @@ function renderTemplate(string $view, array $props) : Response {
 }
 
 class HelloController {
-    // public static function GET(array $attributes) : Response {
-    // public static function GET(Request $request) : Response {
-    public static function GET(string $name) : Response {
-        // return renderTemplate("hello", ["name" => $request->query->get("name") ?? "World", "layoutTitle" => "GET"]);
-        // return renderTemplate("hello", ["name" => $attributes["name"]]);
-        // return renderTemplate("hello", ["name" => $request->attributes->get("name")]);
-        return renderTemplate("hello", ["name" => $name]);
+    public static function GET(Request $request) : Response {
+        return renderTemplate("hello", ["name" => $request->attributes->get("name")]);
     }
 
     public static function POST() : Response {

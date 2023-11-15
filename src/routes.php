@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Route;
 
 $routes = new RouteCollection();
 
-$routes->add("HelloController::GET", new Route("/hello/{name}", ["name" => "default", "_controller" => "HelloController::GET"]));
+$routes->add("HelloController::GET", new Route("/hello/{name}", ["name" => "default"]));
 $routes->add("LoginController::GET", new Route("/login"));
 // $routes->add("bye", "/bye");
 

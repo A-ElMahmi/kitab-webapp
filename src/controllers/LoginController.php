@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginController {
-    public static function GET(array $attributes) : Response {
+    public static function GET(Request $request) : Response {
         // $redirectURL = $request->query->get("redirect");
         $redirectURL = "/login";
 

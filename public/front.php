@@ -23,7 +23,7 @@ $matcher = new UrlMatcher($routes, $context);
 // $matcher = new CompiledUrlMatcher($compiledRoutes, $context);
 
 // $controllerResolver = new ControllerResolver();
-$argumentResolver = new ArgumentResolver();
+// $argumentResolver = new ArgumentResolver();
 
-$framework = new Framework\Framework($matcher, $argumentResolver);
+$framework = new Framework\Framework($matcher);
 $framework->handle($request)->send();

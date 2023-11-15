@@ -13,29 +13,20 @@ use TypeError;
 use ValueError;
 
 class Framework {
-    public function __construct(private UrlMatcher $matcher, private ArgumentResolver $argumentResolver) {
+    public function __construct(private UrlMatcher $matcher) {
         // session_start();
     }
 
     public function handle(Request $request) : Response {
         try {
-            // echo "<pre>";
-
             $request->attributes->add($this->matcher->match(($request->getPathInfo())));
-
             $controller = $request->attributes->get("_route");
-            // $controller = $controllerResolver->getController($request);
-            $arguments = $this->argumentResolver->getArguments($request, $controller); 
 
-            var_dump($arguments);
-
-            return call_user_func_array($controller, $arguments);
+            return call_user_func($controller, $request);
         } catch (ResourceNotFoundException) {
             return new Response("Page Not Found", 404);
-        // } catch (TypeError) {
-        //     return new Response("No controller declared", 500);
-        // } catch (Exception) {
-        //     return new Response("An error occured", 500);
+        } catch (Exception) {
+            return new Response("An error occured", 500);
         }
 
 
