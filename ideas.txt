@@ -1,0 +1,76 @@
+- Auth middleware
+
+- Template engine
+    https://codeshack.io/lightweight-template-engine-php/
+
+    Add View classes controller layer (Inheritance)
+
+    Escape echo statements
+    Cache file?
+
+- Shorthand component syntax
+    Pass props
+
+- Explore reflection function as argument resolver for Controllers:
+    https://www.php.net/manual/en/class.reflectionfunction.php
+
+    before:
+    public function GET(Request $request) {
+        return renderTemplate("hello", ["name" => $request->query->get("name") ?? "World"]);
+    }
+
+    after:
+    public function GET(string $name) {
+        return renderTemplate("hello", ["name" => $name]); // Maybe also explore compact() to auto generate args array
+    }
+
+- Forms Lib
+    Form in seperate file
+    Form object var, that declares contraints on fields
+    Lib injects attributes to <input> and adds <small class="error">
+    Lib also binds input values so data is persistent if error occurs
+    Use js fetch() to check errors as user types
+
+
+TEMPLATES:
+1. Short tags
+2. Escape echo
+3. HTML to avoid escaping
+4. Importing components -> passing props
+4. Extending layouts (inheritance)
+
+<?php
+extend: "layout.php"
+
+props: $props;
+?>
+
+// Auto escape echo
+<?= $props["name"] ?>
+
+// No escape
+<? echo html: $props["para"] ?>
+
+<Component {"a": 1}>
+
+=============================================
+
+// layout.php
+<title><?= $title ?></title>
+
+<main>
+    <Block>
+</main>
+
+
+
+// home.php
+<?php
+extend: "layout.php";
+
+$title = "Home";
+?>
+
+<Block>
+    <p>Hello</p>
+</Block>
