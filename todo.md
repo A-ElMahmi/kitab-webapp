@@ -1,0 +1,8 @@
+- [ ] Caching (Symfony docs) // Learn HTTP Caching first
+- [X] Templating (Blade engine)
+- [ ] Compiled routes ??
+- [ ] Routes for static resources
+- [ ] Database class
+- [ ] Forms lib
+- [ ] Directory-based API routes
+- [ ] Middleware hooks (eg Auth)
