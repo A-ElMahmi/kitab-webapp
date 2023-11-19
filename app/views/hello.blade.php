@@ -10,7 +10,11 @@
         <input type="submit">
     </form>
 
-    @component('components.list', ["count" => 5]) 
-    @endcomponent
+    {{-- @component('components.list', ["count" => 5]) 
+    @endcomponent --}}
+
+    {{-- <img src="https://picsum.photos/400/280" alt="Random image"> --}}
+
+    <img src="/images/aqsa.jpg" alt="Picture of Al-Aqsa mosque">
 
 @endsection

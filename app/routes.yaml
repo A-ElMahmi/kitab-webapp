@@ -1,0 +1,10 @@
+HelloController:
+  path: /hello/{name}
+  defaults:
+    name: default
+
+LoginController:
+  path: /login
+
+ApiController:
+  path: /api
