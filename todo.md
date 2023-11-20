@@ -1,5 +1,5 @@
 - [X] Templating (Blade engine)
-- [ ] Rework Routing setup
+- [X] Rework Routing setup (use _controller)
 - [ ] Routes for static resources
 - [ ] Forms lib
 

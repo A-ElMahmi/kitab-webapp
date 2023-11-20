@@ -9,22 +9,26 @@ use Jenssegers\Blade\Blade;
 
 class Framework {
     public function __construct(private Routing\Matcher\UrlMatcher $matcher) {
-        BaseController::setTemplateEngine(new Blade(__DIR__."/../../app/views", __DIR__."/../../.cache"));
     }
     
     public function handle(Request $request) : Response {
         try {
             $request->attributes->add($this->matcher->match($request->getPathInfo()));
-            $controller = $request->attributes->get("_route");
-            $requestMethod = $request->server->get("REQUEST_METHOD");
+            $controller = $request->attributes->get("_controller");
 
-            return call_user_func([$controller, $requestMethod], $request);
-
+            $className = explode("::", $controller)[0];
+            $className::setTemplateEngine(new Blade(__DIR__."/../../app/views", __DIR__."/../../.cache"));
+            
+            return call_user_func($controller, $request);
+            
         } catch (Routing\Exception\ResourceNotFoundException) {
             return new Response("Page Not Found", 404);
 
-        } catch (\Exception) {
-            return new Response("An error occured", 500);
+        } catch (Routing\Exception\MethodNotAllowedException) {
+            return new Response ("Invalid method", 405);
+
+        // } catch (\Exception) {
+        //     return new Response("An error occured", 500);
         }
 
 

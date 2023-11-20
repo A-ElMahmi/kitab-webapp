@@ -1,11 +1,12 @@
 <?php
 
-use Framework\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class LoginController extends BaseController {
+class LoginController {
+    use Framework\ControllerTrait;
+
     public static function GET(Request $request) : Response {
         $redirectURL = $request->query->get("redirect") ?? "";
 

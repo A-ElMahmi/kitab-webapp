@@ -1,10 +1,25 @@
-HelloController:
+hello_page:
   path: /hello/{name}
+  controller: HelloController::index
+  methods: GET
   defaults:
     name: default
 
-LoginController:
+hello_success:
+  path: /hello/{name}
+  controller: HelloController::success
+  methods: POST
+
+login_form:
   path: /login
+  controller: LoginController::GET
+  methods: GET
+
+login_auth:
+  path: /login
+  controller: LoginController::POST
+  methods: POST
 
 ApiController:
   path: /api
+  controller: ApiController::GET
