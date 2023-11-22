@@ -9,6 +9,8 @@ hello_success:
   path: /hello/{name}
   controller: HelloController::success
   methods: POST
+  defaults:
+    name: default
 
 login_form:
   path: /login
@@ -20,6 +22,6 @@ login_auth:
   controller: LoginController::POST
   methods: POST
 
-ApiController:
+api:
   path: /api
   controller: ApiController::GET

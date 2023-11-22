@@ -16,5 +16,7 @@
     {{-- <img src="https://picsum.photos/400/280" alt="Random image"> --}}
 
     <img src="/images/aqsa.jpg" alt="Picture of Al-Aqsa mosque">
+    
+    <img src="/images/moon.png">
 
 @endsection

@@ -11,10 +11,14 @@ ini_set("display_errors", 1);
 error_reporting(-1);
 
 $request = Request::createFromGlobals();
+// $request = Request::create("/images/aqsa.jpg");
+
 
 $fileLocator = new Config\FileLocator(__DIR__."/../app");
 $routeLoader = new Routing\Loader\YamlFileLoader($fileLocator);
 $routes = $routeLoader->load("routes.yaml");
+
+$routes->addCollection(Framework\StaticRoutes::generate());
 
 $context = new Routing\RequestContext();
 $context->fromRequest($request);

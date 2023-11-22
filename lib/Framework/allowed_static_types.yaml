@@ -1,0 +1,16 @@
+# file_extension: [ mime_type, payload_type (TEXT|FILE) ]
+
+css:  [ text/css,                 TEXT ]
+js:   [ text/javascript,          TEXT ]
+
+json: [ application/json,         TEXT ]
+
+jpg:  [ image/jpg,                FILE ]
+jpeg: [ image/jpeg,               FILE ]
+png:  [ image/png,                FILE ]
+webp: [ image/webp,               FILE ]
+svg:  [ image/svg+xml,            FILE ]
+ico:  [ image/vndmicrosoft.icon", FILE ]
+
+ttf:  [ font/ttf,                 FILE ]
+otf:  [ font/otf,                 FILE ]
