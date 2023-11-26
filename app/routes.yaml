@@ -1,9 +1,17 @@
+index:
+  path: /
+  controller: HelloController::redirect
+
 hello_page:
   path: /hello/{name}
   controller: HelloController::index
   methods: GET
   defaults:
     name: default
+  # options:
+  #   middleware:
+  #     - Form
+  #     - Auth
 
 hello_success:
   path: /hello/{name}
@@ -25,3 +33,7 @@ login_auth:
 api:
   path: /api
   controller: ApiController::GET
+
+test:
+  path: /test
+  controller: HelloController::test

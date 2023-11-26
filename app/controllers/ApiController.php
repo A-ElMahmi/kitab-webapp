@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class ApiController {
-    use Framework\ControllerTrait;
-
     public static function GET(Request $request) : Response {
         // return new Response('{"key":"value"}', headers: ["Content-Type" => "application/json"]);
         return new JsonResponse(["key" => "value"]);

@@ -1,16 +1,14 @@
 <?php
 
+use Framework\Blade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginController {
-    use Framework\ControllerTrait;
-
     public static function GET(Request $request) : Response {
         $redirectURL = $request->query->get("redirect") ?? "";
-
-        return self::renderTemplate("login", ["redirectURL" => $redirectURL]);
+        return Blade::render("login", ["redirectURL" => $redirectURL]);
     }
 
     public static function POST(Request $request) : Response {

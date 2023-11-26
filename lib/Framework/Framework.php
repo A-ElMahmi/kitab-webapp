@@ -4,19 +4,17 @@ namespace Framework;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
-use Jenssegers\Blade\Blade;
 
 
 class Framework {
     public function __construct(private Routing\Matcher\UrlMatcher $matcher) {
+        Blade::init();
     }
     
     public function handle(Request $request) : Response {
         try {
             $request->attributes->add($this->matcher->match($request->getPathInfo()));
             $controller = $request->attributes->get("_controller");
-
-            $this->setTemplateEngine($controller);            
 
             return call_user_func($controller, $request);
             
@@ -26,18 +24,11 @@ class Framework {
         } catch (Routing\Exception\MethodNotAllowedException) {
             return new Response ("Invalid method", 405);
             
-            // } catch (\Exception) {
-                //     return new Response("An error occured", 500);
-            }
-        }
-        
-    private function setTemplateEngine(string $controller) {
-        $className = explode("::", $controller)[0];
-        if (method_exists($className, "setTemplateEngine")) {
-            $className::setTemplateEngine(new Blade(__DIR__."/../../app/views", __DIR__."/../../.cache"));
+        // } catch (\Exception) {
+        //     return new Response("An error occured", 500);
         }
     }
-    
+        
     
     // public function isAuthenticated() : bool {
         // Middleware
