@@ -24,6 +24,8 @@ $context = new Routing\RequestContext();
 $context->fromRequest($request);
 $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
+// var_dump($routes->get("hello_page")->getOptions());
+
 // $compiledRoutes = (new CompiledUrlGeneratorDumper($routes))->getCompiledRoutes();
 // $matcher = new CompiledUrlMatcher($compiledRoutes, $context);
 

@@ -14,17 +14,10 @@ class StaticController {
         $path = $request->getPathInfo();
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         
-        switch ($allowed_static_types[$extension][1]) {
-            case "FILE":
-                $response = new BinaryFileResponse(__DIR__ . "/../../public/$path");
-                $response->headers->set("Content-Disposition", "inline");
-                break;
-            
-            case "TEXT":
-            default:
-                $response = new Response(file_get_contents(__DIR__ . "/../../public/$path"));
-                break;
-        }
+        $response = match ($allowed_static_types[$extension][1]) {
+            "FILE" => new BinaryFileResponse(file: __DIR__ . "/../../public/$path", headers: ["Content-Disposition" => "inline"]),
+            "TEXT" => new Response(file_get_contents(__DIR__ . "/../../public/$path")),
+        };
 
         $response->headers->set("Content-Type", $allowed_static_types[$extension][0]);
         return $response;

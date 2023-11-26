@@ -10,7 +10,7 @@ jpeg: [ image/jpeg,               FILE ]
 png:  [ image/png,                FILE ]
 webp: [ image/webp,               FILE ]
 svg:  [ image/svg+xml,            FILE ]
-ico:  [ image/vndmicrosoft.icon", FILE ]
+ico:  [ image/vndmicrosoft.icon,  FILE ]
 
 ttf:  [ font/ttf,                 FILE ]
 otf:  [ font/otf,                 FILE ]
