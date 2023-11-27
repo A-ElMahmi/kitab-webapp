@@ -1,4 +1,8 @@
-composer init
+# Simplex
+
+> A lightweight PHP MVC Framework
+
+composer install
 
 mvc framework
 controller class (static , request, response etc)
