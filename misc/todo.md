@@ -7,9 +7,9 @@
 - [ ] Forms lib
   - [X] Convert Blade from trait to static class
   - [X] Compile form
-  - [ ] Cache form
+  - [ ] ~~Cache form~~
   - [ ] Validate form
-  - [ ] Custom form validation hook
+  - [ ] Custom form validation hook (only if needed)
   - [ ] Compile Blade form templates too
 
 

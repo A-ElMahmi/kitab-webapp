@@ -8,7 +8,7 @@ class Blade {
     private static $blade;
 
     public static function init() {
-        self::$blade = new Jenssegers\Blade\Blade(__DIR__."/../../app/views", __DIR__."/../../.cache");
+        self::$blade = new Jenssegers\Blade\Blade(__DIR__."/../../app/views", __DIR__."/../../cache/blade");
     }
     
     public static function make(string $view, array $data = []) : string {
