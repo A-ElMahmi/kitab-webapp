@@ -37,3 +37,9 @@ api:
 test:
   path: /test
   controller: HelloController::test
+  methods: GET
+
+test_post:
+  path: /test
+  controller: HelloController::testPost
+  methods: POST

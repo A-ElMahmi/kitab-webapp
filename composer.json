@@ -5,7 +5,8 @@
         "symfony/http-kernel": "^6.3",
         "jenssegers/blade": "^1.4",
         "symfony/config": "^6.3",
-        "symfony/yaml": "^6.3"
+        "symfony/yaml": "^6.3",
+        "ivopetkov/html5-dom-document-php": "2.*"
     },
     "autoload": {
         "psr-4": {

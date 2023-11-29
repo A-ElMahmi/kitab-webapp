@@ -11,7 +11,7 @@ ini_set("display_errors", 1);
 error_reporting(-1);
 
 $request = Request::createFromGlobals();
-// $request = Request::create("/images/aqsa.jpg");
+// $request = Request::create("/test", "POST", content: "username=&password=");
 
 
 $fileLocator = new Config\FileLocator(__DIR__."/../app");

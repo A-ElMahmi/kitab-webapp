@@ -14,6 +14,7 @@
         <ul>
             <li><a href="/hello">Hello</a></li>
             <li><a href="/login">Login</a></li>
+            <li><a href="/test">Test Form</a></li>
         </ul>
     </nav>
 
