@@ -3,6 +3,7 @@ namespace Framework;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing;
 
 
@@ -12,6 +13,9 @@ class Framework {
     }
     
     public function handle(Request $request) : Response {
+        $session = new Session();
+        $request->setSession($session);
+
         try {
             $request->attributes->add($this->matcher->match($request->getPathInfo()));
             $controller = $request->attributes->get("_controller");

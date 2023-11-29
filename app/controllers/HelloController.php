@@ -1,6 +1,7 @@
 <?php
 
 use Framework\Blade;
+use Framework\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,8 +20,22 @@ class HelloController {
         return Blade::render("hello", ["name" => "success"]);
     }
 
-    public static function test(Request $request) : Response {
-        var_dump($request->request->all());
-        return Blade::render("test");
+    public static function test(Request $request, bool $internalRedirect = false) : Response {
+        $f = new Form("test", $request->getSession());
+        if ($internalRedirect === false) {
+            $f->clearSession();
+        }
+        
+        return Blade::render("test", ["f" => $f]);
+    }
+    
+    public static function testPost(Request $request) : Response {
+        $f = new Form("test", $request->getSession());
+        
+        if ($f->validate($request->request) === false) {
+            return self::test($request, internalRedirect: true);
+        }
+
+        return new Response("Success");
     }
 }
