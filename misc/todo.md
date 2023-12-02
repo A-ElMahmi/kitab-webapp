@@ -10,7 +10,7 @@
   - [ ] ~~Cache form~~
   - [X] Validate form
   - [ ] Custom form validation hook (only if needed)
-  - [ ] Compile Blade form templates too
+  - [X] Compile Blade form templates too
 
 
 ### Basic

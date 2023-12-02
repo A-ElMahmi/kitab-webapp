@@ -21,7 +21,7 @@ class HelloController {
     }
 
     public static function test(Request $request, bool $internalRedirect = false) : Response {
-        $f = new Form("test", $request->getSession());
+        $f = new Form("login-form", $request->getSession());
         if ($internalRedirect === false) {
             $f->clearSession();
         }
@@ -30,7 +30,7 @@ class HelloController {
     }
     
     public static function testPost(Request $request) : Response {
-        $f = new Form("test", $request->getSession());
+        $f = new Form("login-form", $request->getSession());
         
         if ($f->validate($request->request) === false) {
             return self::test($request, internalRedirect: true);

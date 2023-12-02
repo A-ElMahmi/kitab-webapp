@@ -12,9 +12,11 @@ class Form {
     private $formValues;
     private $errors = [];
 
-    public function __construct(private string $formView, private Session $session) {
+    public function __construct(private string $formView, private Session $session, array $bladeData = []) {
+        $bladeRendered = Blade::make("forms.$formView", $bladeData);
+        
         $this->dom = new HTML5DOMDocument(encoding: "UTF-8");
-        $this->dom->loadHTMLFile(__DIR__."/../../app/views/forms/$formView.php", LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $this->dom->loadHTML($bladeRendered, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED);
 
         if (($formData = $session->get("form-$formView")) !== null) {
             $this->formValues = $formData["formValues"];
