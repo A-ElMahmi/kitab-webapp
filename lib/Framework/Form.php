@@ -1,10 +1,11 @@
 <?php
 namespace Framework;
 
-use Symfony\Component\HttpFoundation\InputBag;
 use IvoPetkov\HTML5DOMDocument;
 use IvoPetkov\HTML5DOMElement;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Session\Session;
+
 
 class Form {
     private $dom;
@@ -52,17 +53,26 @@ class Form {
     }
     
     public function validate(InputBag $formValues) : bool {
-        $noError = true;
-
         $this->formValues = $formValues;
         $this->errors = [];
+        
+        $noError = true;
+        $constraints = [
+            "required" => [fn($value, $_) => $value === "", "This field is required"],
+            "minlength" => [fn($value, $attr) => strlen($value) < intval($attr), "Minimum length is %s"],
+            "maxlength" => [fn($value, $attr) => strlen($value) > intval($attr), "Maximum length is %s"],
+        ];
 
         $inputs = $this->dom->querySelectorAll("input");
         
         foreach ($inputs as $input) {
-            if ($input->getAttribute("type") === "submit") continue;
-
-            $noError = $this->validateRequired($input) && $noError;
+            $noError = $this->validateField($input, "required", ...$constraints["required"]) && $noError;
+        
+            $inputName = $input->getAttribute("name");
+            if ($this->formValues->get($inputName) === "") continue;
+            
+            $noError = $this->validateField($input, "minlength", ...$constraints["minlength"]) && $noError;
+            $noError = $this->validateField($input, "maxlength", ...$constraints["maxlength"]) && $noError;
         }
         
         $this->session->set("form-test", [
@@ -79,12 +89,16 @@ class Form {
         $this->formValues = new InputBag();
         $this->errors = [];
     }
-    
-    private function validateRequired(HTML5DOMElement $input) : bool {
-        $inputName = $input->getAttribute("name");
 
-        if ($input->hasAttribute("required") && $this->formValues->get($inputName) === "") {
-            $this->errors[$inputName] = "This field is required";
+    private function validateField(HTML5DOMElement $input, string $attribute, \Closure $condition, string $errorMessage) : bool {
+        $inputName = $input->getAttribute("name");
+        $formValue = $this->formValues->get($inputName);
+        $attributeValue = $input->getAttribute($attribute);
+
+        if ($input->hasAttribute($attribute) && $condition($formValue, $attributeValue) === true) {
+            if (!isset($this->errors[$inputName])) {
+                $this->errors[$inputName] = sprintf($errorMessage, $attributeValue);
+            }
             return false;
         }
         
