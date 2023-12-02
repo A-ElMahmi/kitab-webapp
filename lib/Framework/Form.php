@@ -24,14 +24,14 @@ class Form {
         }
     }
     
-    public function make() : string {
-        $form = $this->dom->querySelector("form");
-        $form->setAttribute("novalidate", "");
-        $this->dom->normalize();
-
+    public function render() : string {
         $inputs = $this->dom->querySelectorAll("input");
         
         foreach ($inputs as $input) {
+            $input->removeAttribute("required");
+            $input->removeAttribute("minlength");
+            $input->removeAttribute("maxlength");
+            
             $inputName = $input->getAttribute("name");
 
             if (!in_array($input->getAttribute("type"), ["submit", "password"], strict: true)) {
@@ -48,10 +48,6 @@ class Form {
         return $this->dom->saveHTML();
     }
 
-    public function render() : string {
-        return $this->make();
-    }
-    
     public function validate(InputBag $formValues) : bool {
         $this->formValues = $formValues;
         $this->errors = [];
