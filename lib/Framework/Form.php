@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Form {
     private $dom;
+    private $inputs;
     private $formValues;
     private $errors = [];
 
@@ -17,6 +18,8 @@ class Form {
         
         $this->dom = new HTML5DOMDocument(encoding: "UTF-8");
         $this->dom->loadHTML($bladeRendered, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED);
+
+        $this->inputs = $this->dom->querySelectorAll("input[name]");
 
         if (($formData = $session->get("form-$formView")) !== null) {
             $this->formValues = $formData["formValues"];
@@ -27,16 +30,14 @@ class Form {
     }
     
     public function render() : string {
-        $inputs = $this->dom->querySelectorAll("input");
-        
-        foreach ($inputs as $input) {
+        foreach ($this->inputs as $input) {
             $input->removeAttribute("required");
             $input->removeAttribute("minlength");
             $input->removeAttribute("maxlength");
             
             $inputName = $input->getAttribute("name");
 
-            if (!in_array($input->getAttribute("type"), ["submit", "password"], strict: true)) {
+            if ($input->getAttribute("type") !== "password") {
                 $input->setAttribute("value", $this->formValues->get($inputName) ?? "");
             }
 
@@ -56,14 +57,12 @@ class Form {
         
         $noError = true;
         $constraints = [
-            "required" => [fn($value, $_) => $value === "", "This field is required"],
+            "required" => [fn($value) => $value === "", "This field is required"],
             "minlength" => [fn($value, $attr) => strlen($value) < intval($attr), "Minimum length is %s"],
             "maxlength" => [fn($value, $attr) => strlen($value) > intval($attr), "Maximum length is %s"],
         ];
 
-        $inputs = $this->dom->querySelectorAll("input");
-        
-        foreach ($inputs as $input) {
+        foreach ($this->inputs as $input) {
             $noError = $this->validateField($input, "required", ...$constraints["required"]) && $noError;
         
             $inputName = $input->getAttribute("name");
@@ -73,7 +72,7 @@ class Form {
             $noError = $this->validateField($input, "maxlength", ...$constraints["maxlength"]) && $noError;
         }
         
-        $this->session->set("form-test", [
+        $this->session->set("form-" . $this->formView, [
             "formValues" => $this->formValues,
             "errors" => $this->errors,
         ]);
@@ -94,7 +93,7 @@ class Form {
         $attributeValue = $input->getAttribute($attribute);
 
         if ($input->hasAttribute($attribute) && $condition($formValue, $attributeValue) === true) {
-            if (!isset($this->errors[$inputName])) {
+            if (isset($this->errors[$inputName]) === false) {
                 $this->errors[$inputName] = sprintf($errorMessage, $attributeValue);
             }
             return false;
