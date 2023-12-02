@@ -19,6 +19,7 @@ class StaticController {
             "TEXT" => new Response(file_get_contents(__DIR__ . "/../../public/$path")),
         };
 
+        $response->headers->set("Cache-Control", "max-age=3600");
         $response->headers->set("Content-Type", $allowed_static_types[$extension][0]);
         return $response;
     }

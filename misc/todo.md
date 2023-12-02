@@ -12,6 +12,8 @@
   - [ ] Custom form validation hook (only if needed)
   - [X] Compile Blade form templates too
 
+- [ ] Blade mkdir cache
+- [ ] Gitkeep app dir
 
 ### Basic
 - [ ] Database class
@@ -23,5 +25,5 @@
 - [ ] Vite bundler support
 
 - [ ] Caching (Symfony docs) // Learn HTTP Caching first
-  - [ ] Compiled routes
+  - [X] Compiled routes
   - [ ] Pre-compiled and compressed static resources
