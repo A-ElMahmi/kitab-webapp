@@ -9,11 +9,13 @@
   - [X] Compile form
   - [ ] ~~Cache form~~
   - [X] Validate form
-  - [ ] Custom form validation hook (only if needed)
+  - [ ] Custom form validation hook (IMPORTANT)
   - [X] Compile Blade form templates too
 
-- [ ] Blade mkdir cache
-- [ ] Gitkeep app dir
+- [X] Blade mkdir cache
+- [X] Gitkeep app dir
+- [ ] Composer script for dev server
+
 
 ### Basic
 - [ ] Database class

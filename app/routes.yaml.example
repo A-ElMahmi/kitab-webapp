@@ -1,0 +1,6 @@
+index:
+  path: /{name}
+  controller: MainController::index
+  methods: GET
+  defaults:
+    name: default
