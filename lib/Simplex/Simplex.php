@@ -23,26 +23,21 @@ class Simplex {
             return call_user_func($controller, $request);
             
         } catch (Routing\Exception\ResourceNotFoundException) {
-            return new Response("Page Not Found", 404);
+            return $this->errorResponse(404, "Page Not Found");
             
         } catch (Routing\Exception\MethodNotAllowedException) {
-            return new Response ("Invalid method", 405);
+            return $this->errorResponse(405, "Invalid method");
             
-        // } catch (\Exception) {
-        //     return new Response("An error occured", 500);
+        } catch (\Exception) {
+            return $this->errorResponse(500, "An error occured");
         }
     }
-        
-    
-    // public function isAuthenticated() : bool {
-        // Middleware
-        // if ($routeInfo->authRequired && !$this->isAuthenticated()) {
-        //     return new RedirectResponse("/login?redirect=" . base64_encode($_SERVER["REQUEST_URI"]));
-        // }
- 
-    //     if (!isset($_SESSION["auth"])) {
-    //         $_SESSION["auth"] = false;
-    //     }
-    //     return $_SESSION["auth"] === true;
-    // }
+
+    private function errorResponse(int $errorCode, string $errorMessage) : Response {
+        if (file_exists(__DIR__."/../../app/views/$errorCode.blade.php")) {
+            return Blade::render($errorCode);
+        }
+
+        return new Response($errorMessage, $errorCode);
+    }
 }
