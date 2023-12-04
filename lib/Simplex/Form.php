@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Simplex;
 
 use IvoPetkov\HTML5DOMDocument;
 use IvoPetkov\HTML5DOMElement;

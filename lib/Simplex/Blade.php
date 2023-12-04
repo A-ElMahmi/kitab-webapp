@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Simplex;
 
 use Symfony\Component\HttpFoundation\Response;
 use Jenssegers;

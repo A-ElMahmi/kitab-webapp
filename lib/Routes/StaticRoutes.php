@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Simplex;
 
 use Symfony\Component\Routing;
 use Symfony\Component\Yaml\Yaml;
@@ -11,7 +11,7 @@ class StaticRoutes {
 
     public static function generate() : Routing\RouteCollection {
         self::$routes = new Routing\RouteCollection();
-        self::$allowed_static_types = Yaml::parseFile(__DIR__."/allowed_static_types.yaml");
+        self::$allowed_static_types = Yaml::parseFile(__DIR__."/allowed-static-types.yaml");
 
         self::searchFolder("/");
         
@@ -42,7 +42,7 @@ class StaticRoutes {
                 
                 self::$routes->add($item, new Routing\Route(
                     path: "$relativeFolderPath/$item",
-                    defaults: ["_controller" => "Framework\\StaticController::main"],
+                    defaults: ["_controller" => "Simplex\\StaticController::main"],
                     methods: "GET",
                 ));
             }

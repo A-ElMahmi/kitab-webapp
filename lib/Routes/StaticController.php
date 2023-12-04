@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Simplex;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class StaticController {
     public static function main(Request $request) : Response {
-        $allowed_static_types = Yaml::parseFile(__DIR__."/allowed_static_types.yaml");
+        $allowed_static_types = Yaml::parseFile(__DIR__."/allowed-static-types.yaml");
 
         $path = $request->getPathInfo();
         $extension = pathinfo($path, PATHINFO_EXTENSION);

@@ -1,5 +1,5 @@
 <?php
-namespace Framework;
+namespace Simplex;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing;
 
 
-class Framework {
+class Simplex {
     public function __construct(private Routing\Matcher\UrlMatcher $matcher) {
         Blade::init();
     }

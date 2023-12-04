@@ -10,8 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Framework\\": "lib/Framework/",
-            "Simplex\\": "lib/Routes/",
+            "Simplex\\": ["lib/Simplex/", "lib/Routes/"],
             "": ["app/controllers/", "app/views/"]
         }
     }

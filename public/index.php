@@ -14,5 +14,5 @@ $request = Request::createFromGlobals();
 
 $matcher = Simplex\RouteGenerator::generate($request);
 
-$framework = new Framework\Framework($matcher);
+$framework = new Simplex\Simplex($matcher);
 $framework->handle($request)->send();

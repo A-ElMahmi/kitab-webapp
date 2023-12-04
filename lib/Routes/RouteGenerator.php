@@ -1,8 +1,6 @@
 <?php
 namespace Simplex;
 
-use Framework\StaticRoutes;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing;
 use Symfony\Component\Config;
