@@ -13,6 +13,6 @@ static resources in public (allowed content types)
 
 blade templating (https://laravel.com/docs/10.x/blade), (https://github.com/jenssegers/blade)
 
-Updating readme...
+Merge CONFLICT...
 
 A new line
