@@ -7,11 +7,11 @@ use Symfony\Component\Yaml\Yaml;
 
 class StaticRoutes {
     private static $routes;
-    private static $allowed_static_types;
+    private static $allowedStaticTypes;
 
     public static function generate() : Routing\RouteCollection {
         self::$routes = new Routing\RouteCollection();
-        self::$allowed_static_types = Yaml::parseFile(__DIR__."/allowed-static-types.yaml");
+        self::$allowedStaticTypes = Yaml::parseFile(__DIR__."/allowed-static-types.yaml");
 
         self::searchFolder("/");
         
@@ -22,33 +22,28 @@ class StaticRoutes {
         $contents = self::getFolderContents($relativeFolderPath);
         
         foreach ($contents as $item) {
-            if (is_dir(__DIR__ . "/../../public/" . $relativeFolderPath . $item)) {
+            $fullPath = __DIR__ . "/../../public/$relativeFolderPath/$item"; 
+
+            if (is_dir($fullPath)) {
                 self::searchFolder($relativeFolderPath . $item);
-            }
-        }
-        
-        self::addFiles($relativeFolderPath);
-    }
-    
-    private static function addFiles(string $relativeFolderPath) {
-        $contents = self::getFolderContents($relativeFolderPath);
-        
-        foreach ($contents as $item) {
-            if (is_file(__DIR__ . "/../../public/$relativeFolderPath/$item")) {
-                $extension = pathinfo($item, PATHINFO_EXTENSION);
-                if (isset(self::$allowed_static_types[$extension]) === false) {
-                    continue;
-                }
-                
-                self::$routes->add($item, new Routing\Route(
-                    path: "$relativeFolderPath/$item",
-                    defaults: ["_controller" => "Simplex\\StaticController::main"],
-                    methods: "GET",
-                ));
+
+            } else if (is_file($fullPath)) {
+                self::addFile($relativeFolderPath, $item);
             }
         }
     }
     
+    private static function addFile(string $relativeFolderPath, string $fileName) {
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        if (isset(self::$allowedStaticTypes[$extension]) === false) return;
+        
+        self::$routes->add($fileName, new Routing\Route(
+            path: "$relativeFolderPath/$fileName",
+            defaults: ["_controller" => "Simplex\\StaticController::main"],
+            methods: "GET",
+        ));
+    }
+
     private static function getFolderContents(string $folder) : array {
         return array_diff(scandir(__DIR__ . "/../../public/$folder"), [".", ".."]);
     }
