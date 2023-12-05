@@ -2,14 +2,4 @@ vendor/
 cache/
 composer.lock
 *.env
-public/*
-!public/index.php
-misc/**
-app/*
-!app/routes.yaml.example
-!app/controllers/.gitkeep
-!app/database/.gitkeep
-!app/models/.gitkeep
-!app/views/.gitkeep
-!app/views/components/.gitkeep
-!app/views/forms/.gitkeep
+.vercel
