@@ -8,8 +8,11 @@ class Blade {
     private static $blade;
 
     public static function init() {
-        // $cacheFolder = __DIR__."/../../cache/blade";
-        $cacheFolder = "/tmp/cache/blade";
+        $cacheFolder = match (getenv("VERCEL_ENV")) {
+            "preview", "production" => "/tmp/cache/blade",
+            default => __DIR__."/../../cache/blade",
+        };
+
         if (file_exists($cacheFolder) === false) {
             mkdir($cacheFolder, recursive: true);
         }
