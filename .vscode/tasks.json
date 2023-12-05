@@ -6,7 +6,7 @@
         {
             "label": "php-server",
             "type": "shell",
-            "command": "php -c C:\\xampp\\php\\php.ini -S localhost:1234 .\\public\\index.php",
+            "command": "php -c C:\\xampp\\php\\php.ini -S localhost:1234 .\\api\\index.php",
             "group": {
                 "kind": "build",
                 "isDefault": true,

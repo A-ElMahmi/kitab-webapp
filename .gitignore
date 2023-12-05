@@ -3,7 +3,6 @@ cache/
 composer.lock
 *.env
 public/*
-!public/index.php
 misc/**
 app/*
 !app/routes.yaml.example
