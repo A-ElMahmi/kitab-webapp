@@ -26,19 +26,19 @@ class RouteGenerator {
     }
 
     private static function compileRoutes() : array {
-        $cacheFolder = __DIR__."/../../cache";
+        $cacheFolder = __DIR__."/cache";
         $cacheFile = $cacheFolder . "/routes.cache";
 
-        if (file_exists($cacheFolder) === false) {
-            mkdir($cacheFolder, recursive: true);
-        }
+        // if (file_exists($cacheFolder) === false) {
+        //     mkdir($cacheFolder, recursive: true);
+        // }
         
-        if (file_exists($cacheFile) && filemtime(self::$appDir . "/routes.yaml") < filemtime($cacheFile)) {
-            return unserialize(file_get_contents($cacheFile));
-        }
+        // if (file_exists($cacheFile) && filemtime(self::$appDir . "/routes.yaml") < filemtime($cacheFile)) {
+        //     return unserialize(file_get_contents($cacheFile));
+        // }
 
         $compiledRoutes = (new Routing\Matcher\Dumper\CompiledUrlMatcherDumper(self::$routes))->getCompiledRoutes();
-        file_put_contents($cacheFile, serialize($compiledRoutes));
+        // file_put_contents($cacheFile, serialize($compiledRoutes));
         
         return $compiledRoutes;
     }

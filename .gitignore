@@ -3,3 +3,5 @@ cache/
 composer.lock
 *.env
 .vercel
+.vscode/settings.json
+misc/
