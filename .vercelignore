@@ -2,3 +2,5 @@ vendor
 cache
 misc
 .vscode
+*.env
+composer.lock
