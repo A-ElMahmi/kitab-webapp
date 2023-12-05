@@ -13,7 +13,7 @@ class RouteGenerator {
     private static $cacheFile = __DIR__."/../../cache/routes.cache";
 
     public static function generate(Request $request) : Routing\Matcher\CompiledUrlMatcher {
-        if (getenv("VERCEL_ENV") === false) {
+        if (isset($_ENV["VERCEL_ENV"]) === false) {
             self::buildRoutes();
         }
         

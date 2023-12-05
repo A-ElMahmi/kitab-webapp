@@ -8,10 +8,7 @@ class Blade {
     private static $blade;
 
     public static function init() {
-        $cacheFolder = match (getenv("VERCEL_ENV")) {
-            "preview", "production" => "/tmp/cache/blade",
-            default => __DIR__."/../../cache/blade",
-        };
+        $cacheFolder = isset($_ENV["VERCEL_ENV"]) ? "/tmp/cache/blade" : __DIR__."/../../cache/blade";
 
         if (file_exists($cacheFolder) === false) {
             mkdir($cacheFolder, recursive: true);

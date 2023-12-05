@@ -28,8 +28,8 @@ class Simplex {
         } catch (Routing\Exception\MethodNotAllowedException) {
             return $this->errorResponse(405, "Invalid method");
             
-        } catch (\Exception) {
-            return $this->errorResponse(500, "An error occured");
+        // } catch (\Exception) {
+        //     return $this->errorResponse(500, "An error occured");
         }
     }
 
