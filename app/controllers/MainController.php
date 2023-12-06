@@ -1,8 +1,6 @@
 <?php
 
 use Simplex\Blade;
-use Symfony\Component\HttpFoundation\HeaderUtils;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -10,88 +8,72 @@ use Symfony\Component\HttpFoundation\Response;
 class MainController {
     public static function index(Request $request) : Response {
         $searchQuery = $request->query->get("q");
-        // $filterQuery = $request->query->all()["filter"];
         $filterQuery = isset($request->query->all()["filter"]) ? $request->query->all()["filter"] : null;
-
-        if ($searchQuery !== null && $filterQuery !== null) {
-            $allBooks = BooksModel::searchBooksAndFilter($searchQuery, $filterQuery);
+        
+        if ($filterQuery !== null) {
+            $allBooks = SearchModel::searchBooksAndFilter($searchQuery ?? "", $filterQuery);
         } else if ($searchQuery !== null) {
-            $allBooks = BooksModel::searchBooks($searchQuery);
-        } else if ($filterQuery !== null) {
-            $allBooks = BooksModel::searchBooksAndFilter("", $filterQuery);
+            $allBooks = SearchModel::searchBooks($searchQuery);
         } else {
             $allBooks = BooksModel::getAllBooks();
         }
-        
+
         $itemsToDisplay = 5;
         $totalPages = floor(count($allBooks) / $itemsToDisplay + 0.99);
-        $pageNo = self::constrain(intval($request->query->get("page")), 1, $totalPages);
+        $pageNo = self::constrain($request->query->getInt("page"), 1, $totalPages);
 
-        $slice = ($pageNo - 1) * $itemsToDisplay;
+        $books = array_slice($allBooks, ($pageNo - 1) * $itemsToDisplay, $itemsToDisplay);
 
-        $books = array_slice($allBooks, $slice, $itemsToDisplay);
         
         return Blade::render("index", [
             "booksData" => $books, 
             "currentPage" => $pageNo, 
-            "totalPages" => $totalPages, 
-            // "searchQueryString" => $searchQuery !== "" ? "?q=$searchQuery&filter=" : "?filter=",
-            // "searchAndFilterQueryString" => $searchQuery !== "" ? "?q=$searchQuery&page=" : "?page=",
-            "pageQueryGenerator" => self::pageQueryGenerator($request->getQueryString() ?? ""),
-            "categories" => BooksModel::getAllCategories(),
-            "filterQueryGenerator" => self::filterQueryGenerator($request->query->all() ?? ""),
+            "totalPages" => $totalPages,
+            "pageQueryAdd" => self::pageQueryAdd($request->query->all()),
+            "filterQueryAdd" => self::filterQueryAdd($request->query->all()),
+            "filterQueryRemove" => self::filterQueryRemove($request->query->all()),
+            ...self::getCategoryList($filterQuery),
         ]);
     }
 
-    public static function reserveBook(Request $request) : Response {
-        $isbn = $request->attributes->get("isbn");
+    private static function getCategoryList(?array $filterQuery) : array {
+        $categories = BooksModel::getAllCategories();
+        $appliedCategories = [];
 
-        if (BooksModel::bookExists($isbn) === false) {
-            echo "Book doesn't exist";
-            return new RedirectResponse("/");
-        }
-        
-        if (BooksModel::bookReserved($isbn) === true) {
-            echo "Book Already reserved";
-            return new RedirectResponse("/");
+        if ($filterQuery !== null) {
+            $appliedCategories = array_filter($categories, fn($e) => in_array($e["category_id"], $filterQuery));
+            $categories = array_filter($categories, fn($e) => in_array($e["category_id"], $filterQuery) === false);
         }
 
-        BooksModel::reserveBook($isbn, "tommy100");
-        return new Response("Success. Book reserved");
+        return [
+            "categories" => $categories,
+            "appliedCategories" => $appliedCategories,
+        ];
     }
 
-    public static function unreserveBook(Request $request) : Response {
-        $isbn = $request->attributes->get("isbn");
-
-        if (BooksModel::bookExists($isbn) === false) {
-            echo "Book doesn't exist";
-            return new RedirectResponse("/");
-        }
-        
-        if (BooksModel::bookReserved($isbn) === true) { 
-            BooksModel::unreserveBook($isbn);
-        }
-        
-        return new Response("Success. Book reservation cancelled");
-    }
-
-    private static function pageQueryGenerator(string $queryString) : Closure {
-        return function(int $pageNo) use ($queryString) {
-            $queryArray = HeaderUtils::parseQuery($queryString);
-
+    private static function pageQueryAdd(array $queryArray) : Closure {
+        return function(int $pageNo) use ($queryArray) {
             $queryArray["page"] = $pageNo;
-            
             return "?" . http_build_query($queryArray);
         };
     }
 
-    public static function filterQueryGenerator(array $queryArray) : Closure {
-        return function(int $categoryId) use ($queryArray) {
+    private static function filterQueryAdd(array $queryArray) : Closure {
+        return function(int $categoryId) use ($queryArray) {            
             unset($queryArray["page"]);
             
             $queryArray["filter"][] = $categoryId;
             $queryArray["filter"] = array_unique($queryArray["filter"]);
 
+            return "?" . http_build_query($queryArray);
+        };
+    }
+
+    private static function filterQueryRemove(array $queryArray) : Closure {
+        return function(int $categoryId) use ($queryArray) {            
+            unset($queryArray["page"]);
+            $queryArray["filter"] = array_filter($queryArray["filter"] ?? [], fn($e) => $e != $categoryId);
+            
             return "?" . http_build_query($queryArray);
         };
     }

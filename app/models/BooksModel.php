@@ -6,7 +6,7 @@ class BooksModel {
     }
 
     public static function getAllCategories() : array {
-        return DB::queryAll(("SELECT * FROM category"));
+        return DB::queryAll("SELECT * FROM category");
     }
     
     public static function bookExists(string $isbn) : bool {
@@ -25,17 +25,5 @@ class BooksModel {
     public static function unreserveBook(string $isbn) {
         DB::query("DELETE FROM reservations WHERE isbn = ?", [$isbn]);
         DB::query("UPDATE books SET reserved = FALSE WHERE isbn = ?", [$isbn]);
-    }
-    
-    public static function searchBooks(string $query) : array {
-        return DB::queryAll("SELECT * FROM books JOIN category USING (category_id) WHERE LOWER(book_title) LIKE LOWER(?)", ["%$query%"]);
-    }
-
-    public static function searchBooksAndFilter(string $query, array $filters) : array {
-        $condition = " AND category_id IN (" . str_repeat("?, ", count($filters) - 1) . "?)";
-        return DB::queryAll(
-            "SELECT * FROM books JOIN category USING (category_id) WHERE LOWER(book_title) LIKE LOWER(?) $condition", 
-            ["%$query%", ...$filters]
-        );
     }
 }

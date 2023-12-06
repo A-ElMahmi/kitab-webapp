@@ -4,11 +4,11 @@ index:
 
 reserve_book:
   path: /reserve/{isbn}
-  controller: MainController::reserveBook
-  # methods: POST
+  controller: BooksController::reserveBook
+  methods: POST
 
 unreserve_book:
   path: /unreserve/{isbn}
-  controller: MainController::unreserveBook
-  # methods: POST
+  controller: BooksController::unreserveBook
+  methods: POST
 
