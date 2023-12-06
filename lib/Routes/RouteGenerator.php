@@ -40,9 +40,9 @@ class RouteGenerator {
             mkdir(self::$cacheFolder);
         }
 
-        $mtime = filemtime(self::$appDir . "/routes.yaml");
+        $cacheMtime = filemtime(self::$cacheFile);
 
-        if (file_exists(self::$cacheFile) === false || $mtime > filemtime(self::$cacheFile) || $mtime > filemtime(__DIR__."/../../public")) {
+        if (file_exists(self::$cacheFile) === false || filemtime(self::$appDir . "/routes.yaml") > $cacheMtime || filemtime(__DIR__."/../../public") > $cacheMtime) {
             self::$routes->addCollection(StaticRoutes::generate());
 
             $compiledRoutes = (new Routing\Matcher\Dumper\CompiledUrlMatcherDumper(self::$routes))->getCompiledRoutes();
