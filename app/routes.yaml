@@ -1,6 +1,7 @@
 index:
   path: /
   controller: MainController::index
+  options: [db, auth]
 
 reserve_book:
   path: /reserve/{isbn}

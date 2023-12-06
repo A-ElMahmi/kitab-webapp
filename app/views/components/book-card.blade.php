@@ -11,4 +11,8 @@
     <form method="post" action="/reserve/{{ $bookData["isbn"] }}">
         <input type="submit" value="Reserve">
     </form>
+
+    <form method="post" action="/unreserve/{{ $bookData["isbn"] }}">
+        <input type="submit" value="Cancel">
+    </form>
 </div>
