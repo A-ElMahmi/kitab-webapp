@@ -1,6 +1,14 @@
 index:
-  path: /{name}
+  path: /
   controller: MainController::index
-  methods: GET
-  defaults:
-    name: default
+
+reserve_book:
+  path: /reserve/{isbn}
+  controller: MainController::reserveBook
+  # methods: POST
+
+unreserve_book:
+  path: /unreserve/{isbn}
+  controller: MainController::unreserveBook
+  # methods: POST
+

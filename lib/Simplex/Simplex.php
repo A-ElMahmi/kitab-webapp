@@ -10,6 +10,7 @@ use Symfony\Component\Routing;
 class Simplex {
     public function __construct(private Routing\Matcher\UrlMatcher $matcher) {
         Blade::init();
+        \DB::connect();
     }
     
     public function handle(Request $request) : Response {
