@@ -28,8 +28,6 @@ class RouteGenerator {
         $routeLoader = new Routing\Loader\YamlFileLoader($fileLocator);
         self::$routes = $routeLoader->load("routes.yaml");
 
-        self::$routes->addCollection(StaticRoutes::generate());
-
         self::compileRoutes();
     }
 
@@ -39,14 +37,16 @@ class RouteGenerator {
     
     private static function compileRoutes() {
         if (file_exists(self::$cacheFolder) === false) {
-            mkdir(self::$cacheFolder, recursive: true);
+            mkdir(self::$cacheFolder);
         }
 
-        if (file_exists(self::$cacheFile) && filemtime(self::$appDir . "/routes.yaml") < filemtime(self::$cacheFile)) {
-            return self::getRoutes();
+        $mtime = filemtime(self::$appDir . "/routes.yaml");
+
+        if (file_exists(self::$cacheFile) === false || $mtime > filemtime(self::$cacheFile) || $mtime > filemtime(__DIR__."/../../public")) {
+            self::$routes->addCollection(StaticRoutes::generate());
+
+            $compiledRoutes = (new Routing\Matcher\Dumper\CompiledUrlMatcherDumper(self::$routes))->getCompiledRoutes();
+            file_put_contents(self::$cacheFile, serialize($compiledRoutes));
         }
-        
-        $compiledRoutes = (new Routing\Matcher\Dumper\CompiledUrlMatcherDumper(self::$routes))->getCompiledRoutes();
-        file_put_contents(self::$cacheFile, serialize($compiledRoutes));
     }
 }
