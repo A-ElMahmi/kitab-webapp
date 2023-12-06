@@ -9,10 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MainController {
     public static function index(Request $request) : Response {
-        $searchQuery = $request->query->get("q") ?? "";
+        $searchQuery = $request->query->get("q");
+        // $filterQuery = $request->query->all()["filter"];
+        $filterQuery = isset($request->query->all()["filter"]) ? $request->query->all()["filter"] : null;
 
-        if ($searchQuery !== null) {
+        if ($searchQuery !== null && $filterQuery !== null) {
+            $allBooks = BooksModel::searchBooksAndFilter($searchQuery, $filterQuery);
+        } else if ($searchQuery !== null) {
             $allBooks = BooksModel::searchBooks($searchQuery);
+        } else if ($filterQuery !== null) {
+            $allBooks = BooksModel::searchBooksAndFilter("", $filterQuery);
         } else {
             $allBooks = BooksModel::getAllBooks();
         }
@@ -33,7 +39,7 @@ class MainController {
             // "searchAndFilterQueryString" => $searchQuery !== "" ? "?q=$searchQuery&page=" : "?page=",
             "pageQueryGenerator" => self::pageQueryGenerator($request->getQueryString() ?? ""),
             "categories" => BooksModel::getAllCategories(),
-            "filterQueryGenerator" => self::filterQueryGenerator($request->getQueryString() ?? ""),
+            "filterQueryGenerator" => self::filterQueryGenerator($request->query->all() ?? ""),
         ]);
     }
 
@@ -79,10 +85,8 @@ class MainController {
         };
     }
 
-    public static function filterQueryGenerator(string $queryString) : Closure {
-        return function(int $categoryId) use ($queryString) {
-            $queryArray = HeaderUtils::parseQuery($queryString);
-
+    public static function filterQueryGenerator(array $queryArray) : Closure {
+        return function(int $categoryId) use ($queryArray) {
             unset($queryArray["page"]);
             
             $queryArray["filter"][] = $categoryId;
