@@ -4,6 +4,10 @@ class BooksModel {
     public static function getAllBooks() : array {
         return DB::queryAll("SELECT * FROM books JOIN category USING (category_id)");
     }
+
+    public static function getAllCategories() : array {
+        return DB::queryAll(("SELECT * FROM category"));
+    }
     
     public static function bookExists(string $isbn) : bool {
         return DB::query("SELECT * FROM books WHERE isbn = ?", [$isbn]) !== false;

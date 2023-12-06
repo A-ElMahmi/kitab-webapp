@@ -8,7 +8,9 @@
 </head>
 <body>
     <header>
-        <div>kitab</div>
+        <div>
+            <a href="/">kitab</a>
+        </div>
         <nav>
             <ul>
                 <li><a href="/signup">Sign Up</a></li>

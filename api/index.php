@@ -4,9 +4,10 @@ require_once __DIR__."/../vendor/autoload.php";
 
 use Symfony\Component\HttpFoundation\Request;
 
-
-ini_set("display_errors", 1);
-error_reporting(-1);
+if (@$_ENV["VERCEL_ENV"] !== "production") {
+    ini_set("display_errors", 1);
+    error_reporting(-1);
+}
 
 
 $request = Request::createFromGlobals();
