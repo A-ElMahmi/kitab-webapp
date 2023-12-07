@@ -7,6 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BooksController {
     public static function reserveBook(Request $request) : Response {
+        $session = $request->getSession();
+        if ($session->has("loggedIn") === false) {
+            echo "Log in first";
+            return new RedirectResponse("/login");
+        }
+
         DB::connect();
 
         $isbn = $request->attributes->get("isbn");
@@ -21,11 +27,17 @@ class BooksController {
             return new RedirectResponse("/");
         }
 
-        BooksModel::reserveBook($isbn, "tommy100");
+        BooksModel::reserveBook($isbn, $session->get("username"));
         return new Response("Success. Book reserved");
     }
 
     public static function unreserveBook(Request $request) : Response {
+        $session = $request->getSession();
+        if ($session->has("loggedIn") === false) {
+            echo "Log in first";
+            return new RedirectResponse("/login");
+        }
+
         DB::connect();
 
         $isbn = $request->attributes->get("isbn");

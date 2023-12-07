@@ -6,4 +6,6 @@ SELECT book_title, username FROM reservations
 JOIN books USING (isbn);
 
 SELECT * FROM users;
-WHERE username = 'tommy100' AND password = '$2y$10$gG73L9DNMAHo6MFbhxlYUucJDjsFRYwcrH2ZcCL01WNoba5bsPJTa';
+-- WHERE username = 'tommy100' AND password = '$2y$10$gG73L9DNMAHo6MFbhxlYUucJDjsFRYwcrH2ZcCL01WNoba5bsPJTa';
+
+SELECT * FROM reservations;
