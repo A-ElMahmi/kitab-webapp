@@ -3,10 +3,13 @@
 use Simplex\Blade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 class MainController {
     public static function index(Request $request) : Response {
+        DB::connect();
+
         $searchQuery = $request->query->get("q");
         $filterQuery = isset($request->query->all()["filter"]) ? $request->query->all()["filter"] : null;
         
@@ -34,6 +37,18 @@ class MainController {
             "filterQueryRemove" => self::filterQueryRemove($request->query->all()),
             ...self::getCategoryList($filterQuery),
         ]);
+    }
+    public static function account(Request $request) : Response {
+        $session = $request->getSession();
+        if ($session->has("loggedIn") === false) {
+            echo "Log in first";
+            return new RedirectResponse("/login");
+        }
+
+        DB::connect();
+        $books = BooksModel::getReservedBooks($session->get("username"));
+
+        return Blade::render("account", ["booksData" => $books]);
     }
 
     private static function getCategoryList(?array $filterQuery) : array {

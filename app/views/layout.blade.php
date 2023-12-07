@@ -15,6 +15,8 @@
             <ul>
                 <li><a href="/signup">Sign Up</a></li>
                 <li><a href="/login">Login</a></li>
+                <li><a href="/logout">Log Out</a></li>
+                <li><a href="/account">Account</a></li>
             </ul>
         </nav>
     </header>

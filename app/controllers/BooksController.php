@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BooksController {
     public static function reserveBook(Request $request) : Response {
+        DB::connect();
+
         $isbn = $request->attributes->get("isbn");
 
         if (BooksModel::bookExists($isbn) === false) {
@@ -24,6 +26,8 @@ class BooksController {
     }
 
     public static function unreserveBook(Request $request) : Response {
+        DB::connect();
+
         $isbn = $request->attributes->get("isbn");
 
         if (BooksModel::bookExists($isbn) === false) {

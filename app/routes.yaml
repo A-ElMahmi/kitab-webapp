@@ -1,7 +1,10 @@
 index:
   path: /
   controller: MainController::index
-  options: [db, auth]
+
+account:
+  path: /account
+  controller: MainController::account
 
 reserve_book:
   path: /reserve/{isbn}
@@ -13,3 +16,14 @@ unreserve_book:
   controller: BooksController::unreserveBook
   methods: POST
 
+login:
+  path: /login
+  controller: AuthController::login
+
+sign_up:
+  path: /signup
+  controller: AuthController::signUp
+
+log_out:
+  path: /logout
+  controller: AuthController::logOut

@@ -113,7 +113,7 @@ class Form {
      *
      * @param  string $inputName Name attribute of Input field
      * @param  \Closure $condition Anonymous function with condition. 
-     *                             Must take 1 parameter (value of input) and return bool (true if no error, false otherwise)
+     *                             Must take 2 parameters (value of input & all values) and return bool (true if no error, false otherwise)
      * @param  string $errorMessage Error to be displayed if input fails validation
      * @return void
      */
@@ -136,7 +136,7 @@ class Form {
         // If there's already an error, no need for validate
         if (isset($this->errors[$inputName]) === true) return false;
         
-        $formValue = $this->formValues->get($inputName);
+        $formValue = $this->formValues->get($inputName) ?? "";
         $attributeValue = $input->getAttribute($attribute);
         
         if ($input->hasAttribute($attribute) && call_user_func($condition, $formValue, $attributeValue) === false) {
@@ -157,7 +157,7 @@ class Form {
         $formValue = $this->formValues->get($inputName);
             
         foreach ($this->userConstraints[$inputName] as $constraint) {
-            if (call_user_func($constraint["condition"], $formValue) === false) {
+            if (call_user_func($constraint["condition"], $formValue, $this->formValues->all()) === false) {
                 $this->errors[$inputName] = $constraint["errorMessage"];
                 return false;
             }
