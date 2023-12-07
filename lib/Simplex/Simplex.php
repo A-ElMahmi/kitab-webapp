@@ -3,22 +3,20 @@ namespace Simplex;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing;
 
 
 class Simplex {
-    public function __construct(private Routing\Matcher\UrlMatcher $matcher) {
-        Blade::init();
-    }
+    public function __construct(private Routing\Matcher\UrlMatcher $matcher) {}
     
     public function handle(Request $request) : Response {
-        $session = new Session();
-        $request->setSession($session);
-
         try {
             $request->attributes->add($this->matcher->match($request->getPathInfo()));
             $controller = $request->attributes->get("_controller");
+
+            if (class_exists("\\RequestProcessor")) {
+                $request = \RequestProcessor::process($request);
+            }
 
             return call_user_func($controller, $request);
             

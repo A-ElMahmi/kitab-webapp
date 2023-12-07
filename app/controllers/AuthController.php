@@ -25,7 +25,6 @@ class AuthController {
         );
         
         if ($request->getMethod() === "POST") {
-            DB::connect();
             if ($loginForm->validate($request->request) === true) {
                 $session->replace(["loggedIn" => true, "username" => $request->request->get("username")]);
                 return new Response("Successful login");
@@ -50,7 +49,6 @@ class AuthController {
         $signUpForm->addConstraint("mobile_number", fn($val) => is_numeric($val), "Must contain only numbers");
         
         if ($request->getMethod() === "POST") {
-            DB::connect();
             if ($signUpForm->validate($request->request) === true) {
                 UserModel::createUser($request->request->all());
                 return new Response("Successful sign up");

@@ -13,8 +13,6 @@ class BooksController {
             return new RedirectResponse("/login");
         }
 
-        DB::connect();
-
         $isbn = $request->attributes->get("isbn");
 
         if (BooksModel::bookExists($isbn) === false) {
@@ -37,8 +35,6 @@ class BooksController {
             echo "Log in first";
             return new RedirectResponse("/login");
         }
-
-        DB::connect();
 
         $isbn = $request->attributes->get("isbn");
 

@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MainController {
     public static function index(Request $request) : Response {
-        DB::connect();
-
         $searchQuery = $request->query->get("q");
         $filterQuery = isset($request->query->all()["filter"]) ? $request->query->all()["filter"] : null;
         
@@ -36,6 +34,7 @@ class MainController {
             "filterQueryAdd" => self::filterQueryAdd($request->query->all()),
             "filterQueryRemove" => self::filterQueryRemove($request->query->all()),
             ...self::getCategoryList($filterQuery),
+            // "logged"
         ]);
     }
     public static function account(Request $request) : Response {
@@ -45,7 +44,6 @@ class MainController {
             return new RedirectResponse("/login");
         }
 
-        DB::connect();
         $books = BooksModel::getReservedBooks($session->get("username"));
 
         return Blade::render("account", ["booksData" => $books]);

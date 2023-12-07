@@ -37,7 +37,7 @@ class StaticRoutes {
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
         if (isset(self::$allowedStaticTypes[$extension]) === false) return;
         
-        self::$routes->add($fileName, new Routing\Route(
+        self::$routes->add("static-" . $fileName, new Routing\Route(
             path: "$relativeFolderPath/$fileName",
             defaults: ["_controller" => "Simplex\\StaticController::main"],
             methods: "GET",

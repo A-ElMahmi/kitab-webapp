@@ -13,10 +13,16 @@
         </div>
         <nav>
             <ul>
-                <li><a href="/signup">Sign Up</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/logout">Log Out</a></li>
-                <li><a href="/account">Account</a></li>
+                @php
+                    $loggedIn = false;
+                @endphp
+                @if ($loggedIn)
+                    <li><a href="/logout">Log Out</a></li>
+                    <li><a href="/account">Account</a></li>                    
+                @else
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/login">Login</a></li>                    
+                @endif
             </ul>
         </nav>
     </header>
