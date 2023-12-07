@@ -1,5 +1,6 @@
 <?php
 
+use Simplex\Blade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -10,9 +11,11 @@ class RequestProcessor {
         
         $session = new Session();
         $request->setSession($session);
-        
-        Simplex\Blade::init();
+
         DB::connect();
+        
+        Blade::init();
+        Blade::share("loggedIn", $session->has("loggedIn"));
 
         return $request;
     }

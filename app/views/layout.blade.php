@@ -13,9 +13,6 @@
         </div>
         <nav>
             <ul>
-                @php
-                    $loggedIn = false;
-                @endphp
                 @if ($loggedIn)
                     <li><a href="/logout">Log Out</a></li>
                     <li><a href="/account">Account</a></li>                    

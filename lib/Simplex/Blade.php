@@ -24,4 +24,8 @@ class Blade {
     public static function render(string $view, array $data = []) : Response {
         return new Response(self::make($view, $data));
     }
+
+    public static function share(string $key, string $value) {
+        self::$blade->share($key, $value);
+    }
 }
