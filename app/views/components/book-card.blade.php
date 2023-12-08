@@ -1,10 +1,12 @@
 @yield('bookData')
 @yield('username')
 
-<div class="card">
+<div class="card shadow">
     <div class="card-image">
         @if ($bookData["book_cover"] === null)
             <img src="/book-covers/placeholder.jpg" alt="Placeholder Book Cover">
+        @else
+            <img src="{{$bookData["book_cover"]}}" alt="Book Cover">
         @endif
     </div>
 
@@ -18,16 +20,16 @@
         </p>
         @if ($bookData["reserved_by"] === null)
             <form method="post" action="/reserve/{{ $bookData["isbn"] }}">
-                <input type="submit" value="Reserve" class="btn primary">
+                <input type="submit" value="Reserve" class="btn primary shadow">
             </form>
         @else
             @if ($bookData["reserved_by"] === $username)
                 <form method="post" action="/unreserve/{{ $bookData["isbn"] }}">
-                    <input type="submit" value="Cancel" class="btn secondary">
+                    <input type="submit" value="Cancel" class="btn secondary shadow">
                 </form>
             @else
                 <form>
-                    <input type="submit" value="Unavailable" class="btn" disabled>
+                    <input type="submit" value="Unavailable" class="btn shadow" disabled>
                 </form>
             @endif
         @endif

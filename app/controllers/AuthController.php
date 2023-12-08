@@ -27,7 +27,8 @@ class AuthController {
         if ($request->getMethod() === "POST") {
             if ($loginForm->validate($request->request) === true) {
                 $session->replace(["loggedIn" => true, "username" => $request->request->get("username")]);
-                return new Response("Successful login");
+                echo "Successful login";
+                return new RedirectResponse("/");
             }
         }
 
@@ -51,7 +52,8 @@ class AuthController {
         if ($request->getMethod() === "POST") {
             if ($signUpForm->validate($request->request) === true) {
                 UserModel::createUser($request->request->all());
-                return new Response("Successful sign up");
+                echo "Successful sign up";
+                return new RedirectResponse("/login");
             }
         }
 

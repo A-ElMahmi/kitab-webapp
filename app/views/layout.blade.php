@@ -40,29 +40,12 @@
         @yield('main')
     </main>
 
-    <aside>
-        @foreach ($flashBag as $type => $messages)
-            {{var_dump($messages)}}
-            @foreach ($messages as $message)
-                @component('componenets.dialog', ["message" => $message, "messageType" => $type])
-                @endcomponent
-            @endforeach
-        @endforeach
-    </aside>
-
     <footer>
         <p>This website was developed by Abderrahmane El Mahmi</p>
         <ul>
-            <li><a href="#">Github</a></li>
-            <li><a href="#">LinkedIn</a></li>
+            <li><a href="https://github.com/A-ElMahmi/">Github</a></li>
+            <li><a href="https://www.linkedin.com/in/abderrahmane-el-mahmi-36a929256/">LinkedIn</a></li>
         </ul>
     </footer>
-
-    <script defer>
-        function close(button) {
-            console.log(button)
-            button.parentNode.style.display = "none"
-        }
-    </script>
 </body>
 </html>

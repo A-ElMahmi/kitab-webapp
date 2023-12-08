@@ -3,10 +3,10 @@
 @section('title', 'Home')
 
 @section('search-box')
-    <form method="get" class="search-box">
+    <form method="get" class="search-box shadow">
         <img src="/icons/search.svg" alt="Search Icon">
-        <input type="text" name="q" placeholder="Search by book title, author..." autofocus>
-        <input type="submit" value="Search" class="btn primary">
+        <input type="text" name="q" value="{{$searchQuery}}" placeholder="Search by book title, author..." autofocus onfocus="this.select()">
+        <input type="submit" value="Search" class="btn primary shadow">
     </form>
 @endsection
 
@@ -31,9 +31,9 @@
     </div>
         
     @empty($booksData)
-        <div>
-            <h4>No Results Found</h4>
-            <img src="/graphics/no-search-results.svg" alt="No Results Graphic">
+        <div class="text-center">
+            <h1>No Results Found</h1>
+            <img src="/graphics/no-search-results.svg" alt="No Results Graphic" class="center-graphic">
         </div>
     @endempty
 

@@ -4,7 +4,7 @@
 
 @section('main')
 
-<div class="form-wrapper signup">
+<div class="form-wrapper signup shadow">
     <h1>Sign Up</h1>
     
     {!! $signUpForm->render() !!}

@@ -28,7 +28,8 @@ class MainController {
         
         return Blade::render("index", [
             "booksData" => $books,
-            "username" => $request->getSession()->get("username") ,
+            "username" => $request->getSession()->get("username"),
+            "searchQuery" => $searchQuery ?? "",
             "currentPage" => $pageNo, 
             "totalPages" => $totalPages,
             "pageQueryAdd" => self::pageQueryAdd($request->query->all()),

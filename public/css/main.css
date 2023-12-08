@@ -120,6 +120,7 @@ form.search-box input[type="text"] {
     margin-inline: 0.5rem;
     color: var(--text-black);
 }
+
 form.search-box input[type="text"]::placeholder {
     color: var(--text-grey);
 }
@@ -188,6 +189,10 @@ ul.categories {
 
     border-radius: var(--border-radius);
     background-color: var(--secondary-blue);
+}
+
+.card-image img {
+    width: 100%;
 }
 
 .card-content {
@@ -277,6 +282,7 @@ ul.categories {
     margin: 2rem 0 4rem;
     color: var(--text-black);
     background-color: white;
+    border-radius: var(--border-radius);
 }
 
 .form-wrapper h1 {

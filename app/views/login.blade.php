@@ -4,7 +4,7 @@
 
 @section('main')
 
-<div class="form-wrapper login">
+<div class="form-wrapper login shadow">
     <h1>Login</h1>
     
     {!! $loginForm->render() !!}

@@ -24,9 +24,10 @@ class BooksController {
             echo "Book Already reserved";
             return new RedirectResponse("/");
         }
-
+        
         BooksModel::reserveBook($isbn, $session->get("username"));
-        return new Response("Success. Book reserved");
+        echo "Success. Book reserved";
+        return new RedirectResponse("/");
     }
 
     public static function unreserveBook(Request $request) : Response {
@@ -47,6 +48,7 @@ class BooksController {
             BooksModel::unreserveBook($isbn);
         }
         
-        return new Response("Success. Book reservation cancelled");
+        echo "Success. Book reservation cancelled";
+        return new RedirectResponse("/");
     }
 }

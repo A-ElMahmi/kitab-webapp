@@ -14,6 +14,6 @@
     </div>
 
     <div>
-        <input type="submit" value="Login" class="btn primary">
+        <input type="submit" value="Login" class="btn primary shadow">
     </div>
 </form>

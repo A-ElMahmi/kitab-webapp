@@ -23,9 +23,9 @@
     </div>
         
     @empty($booksData)
-        <div>
-            <h4>No Results Found</h4>
-            <img src="/graphics/no-search-results.svg" alt="No Results Graphic">
+        <div class="text-center">
+            <h1>No Results Found</h1>
+            <img src="/graphics/no-search-results.svg" alt="No Results Graphic" class="center-graphic">
         </div>
     @endempty
 @endsection

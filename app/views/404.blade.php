@@ -4,8 +4,8 @@
 
 @section('main')
         <div>
-            <h4>Page Not Found</h4>
-            <img src="/graphics/page-not-found.svg" alt="Page Not Found Graphic">
+            <h1 class="text-center">Page Not Found</h1>
+            <img src="/graphics/page-not-found.svg" alt="Page Not Found Graphic" class="center-graphic">
         </div>
 
 @endsection

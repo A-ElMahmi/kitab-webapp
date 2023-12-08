@@ -70,6 +70,6 @@
     </div>
 
     <div>
-        <input type="submit" value="Sign Up" class="btn primary">
+        <input type="submit" value="Sign Up" class="btn primary shadow">
     </div>
 </form>
