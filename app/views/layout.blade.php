@@ -22,7 +22,7 @@
             </div>
             <nav>
                 <ul class="flex-list">
-                    @if (isset($loggedIn) && $loggedIn === "true")
+                    @if (isset($loggedIn) && $loggedIn === true)
                     <li><a href="/account">Account</a></li>
                         <li><a href="/logout">Log Out</a></li>
                     @else
@@ -40,6 +40,16 @@
         @yield('main')
     </main>
 
+    <aside>
+        @foreach ($flashBag as $type => $messages)
+            {{var_dump($messages)}}
+            @foreach ($messages as $message)
+                @component('componenets.dialog', ["message" => $message, "messageType" => $type])
+                @endcomponent
+            @endforeach
+        @endforeach
+    </aside>
+
     <footer>
         <p>This website was developed by Abderrahmane El Mahmi</p>
         <ul>
@@ -47,5 +57,12 @@
             <li><a href="#">LinkedIn</a></li>
         </ul>
     </footer>
+
+    <script defer>
+        function close(button) {
+            console.log(button)
+            button.parentNode.style.display = "none"
+        }
+    </script>
 </body>
 </html>

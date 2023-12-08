@@ -25,7 +25,7 @@ class Blade {
         return new Response(self::make($view, $data));
     }
 
-    public static function share(string $key, string $value) {
+    public static function share(string $key, mixed $value) {
         self::$blade->share($key, $value);
     }
 }
