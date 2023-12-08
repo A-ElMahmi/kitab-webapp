@@ -4,7 +4,7 @@
 
 @section('search-box')
     <form method="get" class="search-box shadow">
-        <img src="/icons/search.svg" alt="Search Icon">
+        <img src="/icons/search.svg" alt="Search Icon" class="search-icon">
         <input type="text" name="q" value="{{$searchQuery}}" placeholder="Search by book title, author..." autofocus onfocus="this.select()">
         <input type="submit" value="Search" class="btn primary shadow">
     </form>

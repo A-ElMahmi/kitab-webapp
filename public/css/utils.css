@@ -29,6 +29,7 @@
 .btn:disabled {
     color: white;
     background-color: var(--text-grey);
+    cursor: not-allowed;
 }
 
 .center-graphic {

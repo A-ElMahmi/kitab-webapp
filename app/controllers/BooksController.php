@@ -13,10 +13,7 @@ class BooksController {
             return new RedirectResponse("/login?redirect=" . base64_encode($request->getRequestUri()));
         }
 
-        $redirectUrl = match ($request->query->has("redirect")) {
-            true => base64_decode($request->query->get("redirect")),
-            false => "/",
-        };
+        $redirectUrl = $request->query->has("redirect") ? base64_decode($request->query->get("redirect")) : "/";
 
         $isbn = $request->attributes->get("isbn");
 

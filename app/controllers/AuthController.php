@@ -29,7 +29,8 @@ class AuthController {
                 $session->replace(["loggedIn" => true, "username" => $request->request->get("username")]);
                 echo "Successful login";
 
-                $redirectUrl = base64_decode($request->query->get("redirect", "/"));
+                $redirectUrl = $request->query->has("redirect") ? base64_decode($request->query->get("redirect")) : "/";
+        
                 return new RedirectResponse($redirectUrl);
             }
         }

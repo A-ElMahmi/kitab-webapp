@@ -14,10 +14,11 @@ class DB {
         $dbName = $_ENV["POSTGRES_DATABASE"];
         $user = $_ENV["POSTGRES_USER"];
         $password = $_ENV["POSTGRES_PASSWORD"];
-        $endpoint = explode(".", $host)[0];
+        // $endpoint = explode(".", $host)[0];
 
         try {
-            $dsn = "pgsql:host=$host;port=5432;dbname=$dbName;options=endpoint=$endpoint;sslmode=require";
+            // $dsn = "pgsql:host=$host;port=5432;dbname=$dbName;options=endpoint=$endpoint;sslmode=require";
+            $dsn = "pgsql:host=$host;port=5432;dbname=$dbName";
             self::$db = new PDO( $dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
         } catch (PDOException) {
             throw new Exception("Unable to connect to server");

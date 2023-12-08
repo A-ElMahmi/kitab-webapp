@@ -113,6 +113,9 @@ form.search-box {
     
     background-color: white;
     border-radius: var(--border-radius);
+
+    display: flex;
+    align-items: center;
 }
 
 form.search-box input[type="text"] {
@@ -127,6 +130,11 @@ form.search-box input[type="text"]::placeholder {
 
 form.search-box .btn {
     width: 8rem;
+}
+
+form.search-box .search-icon {
+    width: 25px;
+    height: 25px;
 }
 
 
@@ -150,6 +158,10 @@ ul.categories {
 .categories a {
     color: var(--primary-blue);
 
+}
+
+.categories a:hover {
+    text-decoration: none;
 }
 
 .categories li.selected {
