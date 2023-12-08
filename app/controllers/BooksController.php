@@ -10,24 +10,29 @@ class BooksController {
         $session = $request->getSession();
         if ($session->has("loggedIn") === false) {
             echo "Log in first";
-            return new RedirectResponse("/login");
+            return new RedirectResponse("/login?redirect=" . base64_encode($request->getRequestUri()));
         }
+
+        $redirectUrl = match ($request->query->has("redirect")) {
+            true => base64_decode($request->query->get("redirect")),
+            false => "/",
+        };
 
         $isbn = $request->attributes->get("isbn");
 
         if (BooksModel::bookExists($isbn) === false) {
             echo "Book doesn't exist";
-            return new RedirectResponse("/");
+            return new RedirectResponse($redirectUrl);
         }
         
         if (BooksModel::bookReserved($isbn) === true) {
             echo "Book Already reserved";
-            return new RedirectResponse("/");
+            return new RedirectResponse($redirectUrl);
         }
         
         BooksModel::reserveBook($isbn, $session->get("username"));
         echo "Success. Book reserved";
-        return new RedirectResponse("/");
+        return new RedirectResponse($redirectUrl);
     }
 
     public static function unreserveBook(Request $request) : Response {
@@ -37,11 +42,13 @@ class BooksController {
             return new RedirectResponse("/login");
         }
 
+        $redirectUrl = base64_decode($request->query->get("redirect", "/"));
+
         $isbn = $request->attributes->get("isbn");
 
         if (BooksModel::bookExists($isbn) === false) {
             echo "Book doesn't exist";
-            return new RedirectResponse("/");
+            return new RedirectResponse($redirectUrl);
         }
         
         if (BooksModel::bookReserved($isbn) === true) { 
@@ -49,6 +56,6 @@ class BooksController {
         }
         
         echo "Success. Book reservation cancelled";
-        return new RedirectResponse("/");
+        return new RedirectResponse($redirectUrl);
     }
 }

@@ -16,7 +16,9 @@ class RequestProcessor {
         
         Blade::init();
         Blade::share("loggedIn", $session->has("loggedIn"));
-
+        Blade::share("username", $session->get("username"));
+        Blade::share("currentUrl", $request->getRequestUri());
+        
         return $request;
     }
 }

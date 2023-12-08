@@ -6,7 +6,8 @@ class BooksModel {
             "SELECT isbn, book_title, book_author, year_published, category_name, username AS reserved_by, book_cover
             FROM books 
             JOIN category USING (category_id)
-            LEFT JOIN reservations USING (isbn)"
+            LEFT JOIN reservations USING (isbn)
+            ORDER BY book_title"
         );
     }
 
@@ -16,7 +17,8 @@ class BooksModel {
             FROM reservations 
             JOIN books USING (isbn) 
             JOIN category USING (category_id) 
-            WHERE username = ?", 
+            WHERE username = ?
+            ORDER BY book_title",
             [$username]
         ) ?: [];
     }

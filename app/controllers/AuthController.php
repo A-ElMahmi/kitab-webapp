@@ -28,7 +28,9 @@ class AuthController {
             if ($loginForm->validate($request->request) === true) {
                 $session->replace(["loggedIn" => true, "username" => $request->request->get("username")]);
                 echo "Successful login";
-                return new RedirectResponse("/");
+
+                $redirectUrl = base64_decode($request->query->get("redirect", "/"));
+                return new RedirectResponse($redirectUrl);
             }
         }
 

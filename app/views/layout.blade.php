@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/utils.css">
+
+    <link rel="icon" type="image/vndmicrosoft.icon" href="/favicon.ico">
 </head>
 <body>
     <div class="header-wrapper">

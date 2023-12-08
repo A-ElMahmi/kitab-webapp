@@ -19,12 +19,12 @@
             <span class="year">{{ $bookData["year_published"] }}</span>
         </p>
         @if ($bookData["reserved_by"] === null)
-            <form method="post" action="/reserve/{{ $bookData["isbn"] }}">
+            <form method="post" action="/reserve/{{ $bookData["isbn"] }}?redirect={{base64_encode($currentUrl)}}">
                 <input type="submit" value="Reserve" class="btn primary shadow">
             </form>
         @else
             @if ($bookData["reserved_by"] === $username)
-                <form method="post" action="/unreserve/{{ $bookData["isbn"] }}">
+                <form method="post" action="/unreserve/{{ $bookData["isbn"] }}?redirect={{base64_encode($currentUrl)}}">
                     <input type="submit" value="Cancel" class="btn secondary shadow">
                 </form>
             @else

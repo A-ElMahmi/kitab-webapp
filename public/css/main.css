@@ -172,20 +172,20 @@ ul.categories {
 }
 
 .card {
-    max-width: 15rem;
+    --card-width: 16.5rem;
+    
+    width: var(--card-width);
     background-color: white;
     border-radius: var(--border-radius);
 }
 
 .card-image {
-    max-height: 15rem;
-    height: 240px;
-    width: 240px;
+    width: var(--card-width);
+    aspect-ratio: 4/5;
     overflow: hidden;
 
     display: flex;
     align-items: center;
-    justify-content: center;
 
     border-radius: var(--border-radius);
     background-color: var(--secondary-blue);
@@ -212,6 +212,8 @@ ul.categories {
     font-weight: 700;
     line-height: 1.1;
     color: var(--text-black);
+
+    min-height: 3.3rem;
 }
 
 .card .author-and-year {

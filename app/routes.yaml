@@ -9,7 +9,6 @@ account:
 reserve_book:
   path: /reserve/{isbn}
   controller: BooksController::reserveBook
-  methods: POST
 
 unreserve_book:
   path: /unreserve/{isbn}
