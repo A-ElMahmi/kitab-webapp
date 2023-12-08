@@ -1,18 +1,36 @@
 @yield('bookData')
+@yield('username')
 
-<div>
-    <p>{{ $bookData["category_name"] }}</p>
-    <h4>{{ $bookData["book_title"] }}</h4>
-    <p>
-        <span>{{ $bookData["book_author"] }}</span>
-        <span>{{ $bookData["year_published"] }}</span>
-    </p>
+<div class="card">
+    <div class="card-image">
+        @if ($bookData["book_cover"] === null)
+            <img src="/book-covers/placeholder.jpg" alt="Placeholder Book Cover">
+        @endif
+    </div>
 
-    <form method="post" action="/reserve/{{ $bookData["isbn"] }}">
-        <input type="submit" value="Reserve">
-    </form>
+    <div class="card-content">
+        <p class="category">{{ $bookData["category_name"] }}</p>
+        <h4 class="title">{{ $bookData["book_title"] }}</h4>
+        <p class="author-and-year">
+            <span class="author">{{ $bookData["book_author"] }}</span>
+            <span class="seperator">&#8226;</span>
+            <span class="year">{{ $bookData["year_published"] }}</span>
+        </p>
+        @if ($bookData["reserved_by"] === null)
+            <form method="post" action="/reserve/{{ $bookData["isbn"] }}">
+                <input type="submit" value="Reserve" class="btn primary">
+            </form>
+        @else
+            @if ($bookData["reserved_by"] === $username)
+                <form method="post" action="/unreserve/{{ $bookData["isbn"] }}">
+                    <input type="submit" value="Cancel" class="btn secondary">
+                </form>
+            @else
+                <form>
+                    <input type="submit" value="Unavailable" class="btn" disabled>
+                </form>
+            @endif
+        @endif
+    </div>
 
-    <form method="post" action="/unreserve/{{ $bookData["isbn"] }}">
-        <input type="submit" value="Cancel">
-    </form>
 </div>

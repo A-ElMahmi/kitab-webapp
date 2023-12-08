@@ -2,38 +2,55 @@
 
 @section('title', 'Home')
 
-@section('main')
-    <form method="get">
-        <input type="search" name="q" autofocus>
-        <input type="submit">
+@section('search-box')
+    <form method="get" class="search-box">
+        <img src="/icons/search.svg" alt="Search Icon">
+        <input type="text" name="q" placeholder="Search by book title, author..." autofocus>
+        <input type="submit" value="Search" class="btn primary">
     </form>
+@endsection
 
+@section('main')
     <div>
-        <ul>
+        <ul class="categories flex-list">
             @foreach ($appliedCategories as $category)
-                <li><a href="{{$filterQueryRemove($category["category_id"])}}">{{$category["category_name"]}}</a></li>
+                <li class="selected"><a href="{{$filterQueryRemove($category["category_id"])}}">{{$category["category_name"]}}</a></li>
             @endforeach
-            <li>-------</li>
+            {{-- <li>-------</li> --}}
             @foreach ($categories as $category)
                 <li><a href="{{$filterQueryAdd($category["category_id"])}}">{{$category["category_name"]}}</a></li>
             @endforeach
         </ul>
     </div>
 
-    <div>
-        <ul>
-            <li><a @if($currentPage != 1) href="{{$pageQueryAdd($currentPage-1)}}" @endif>Prev</a></li>
-            @for ($i = 1; $i <= $totalPages; $i++)
-            <li><a @if ($i == $currentPage) style="color: red" @endif href="{{$pageQueryAdd($i)}}">{{$i}}</a></li>
-            @endfor
-            <li><a @if($currentPage != $totalPages) href="{{$pageQueryAdd($currentPage+1)}}" @endif>Next</a></li>
-        </ul>
+    <div class="books-container">
+        @foreach ($booksData as $book)
+            @component('components.book-card', ["bookData" => $book, "username" => $username])
+            @endcomponent
+        @endforeach
     </div>
+        
+    @empty($booksData)
+        <div>
+            <h4>No Results Found</h4>
+            <img src="/graphics/no-search-results.svg" alt="No Results Graphic">
+        </div>
+    @endempty
 
-    @forelse ($booksData as $book)
-        @component('components.book-card', ["bookData" => $book])
-        @endcomponent
-    @empty
-        <div>No results</div>
-    @endforelse
+    @if (empty($booksData) === false)        
+        <div class="pagination">
+            <ul class="flex-list">
+                <li><a @if($currentPage != 1) href="{{$pageQueryAdd($currentPage-1)}}" @endif>
+                    <img src="/icons/double-arrow-left.svg" alt="Previous Page Icon">
+                </a></li>
+                @for ($i = 1; $i <= $totalPages; $i++)
+                <li @if ($i == $currentPage) class="selected" @endif><a href="{{$pageQueryAdd($i)}}">{{$i}}</a></li>
+                @endfor
+                <li><a @if($currentPage != $totalPages) href="{{$pageQueryAdd($currentPage+1)}}" @endif>
+                    <img src="/icons/double-arrow-right.svg" alt="Next Page Icon">
+                </a></li>
+            </ul>
+        </div>
+    @endif
+
 @endsection

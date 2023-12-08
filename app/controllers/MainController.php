@@ -27,14 +27,14 @@ class MainController {
 
         
         return Blade::render("index", [
-            "booksData" => $books, 
+            "booksData" => $books,
+            "username" => $request->getSession()->get("username") ,
             "currentPage" => $pageNo, 
             "totalPages" => $totalPages,
             "pageQueryAdd" => self::pageQueryAdd($request->query->all()),
             "filterQueryAdd" => self::filterQueryAdd($request->query->all()),
             "filterQueryRemove" => self::filterQueryRemove($request->query->all()),
             ...self::getCategoryList($filterQuery),
-            // "logged"
         ]);
     }
     public static function account(Request $request) : Response {
@@ -46,7 +46,10 @@ class MainController {
 
         $books = BooksModel::getReservedBooks($session->get("username"));
 
-        return Blade::render("account", ["booksData" => $books]);
+        return Blade::render("account", [
+            "booksData" => $books,
+            "username" => $request->getSession()->get("username"),
+        ]);
     }
 
     private static function getCategoryList(?array $filterQuery) : array {

@@ -4,8 +4,12 @@
 
 @section('main')
 
-<h1>Login</h1>
+<div class="form-wrapper login">
+    <h1>Login</h1>
+    
+    {!! $loginForm->render() !!}
 
-{!! $loginForm->render() !!}
+    <div class="message">Don't have an account? <a href="/signup">Sign Up</a></div>
+</div>
 
 @endsection

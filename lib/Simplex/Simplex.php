@@ -33,7 +33,8 @@ class Simplex {
 
     private function errorResponse(int $errorCode, string $errorMessage) : Response {
         if (file_exists(__DIR__."/../../app/views/$errorCode.blade.php")) {
-            return Blade::render($errorCode);
+            Blade::init();
+            return Blade::render(strval($errorCode));
         }
 
         return new Response($errorMessage, $errorCode);

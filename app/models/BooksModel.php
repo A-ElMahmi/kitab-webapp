@@ -2,12 +2,18 @@
 
 class BooksModel {
     public static function getAllBooks() : array {
-        return DB::queryAll("SELECT * FROM books JOIN category USING (category_id)");
+        return DB::queryAll(
+            "SELECT isbn, book_title, book_author, year_published, category_name, username AS reserved_by, book_cover
+            FROM books 
+            JOIN category USING (category_id)
+            LEFT JOIN reservations USING (isbn)"
+        );
     }
 
     public static function getReservedBooks(string $username) : array {
         return DB::queryAll(
-            "SELECT * FROM reservations 
+            "SELECT isbn, book_title, book_author, year_published, category_name, username AS reserved_by, book_cover
+            FROM reservations 
             JOIN books USING (isbn) 
             JOIN category USING (category_id) 
             WHERE username = ?", 

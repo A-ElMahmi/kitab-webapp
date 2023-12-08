@@ -3,6 +3,8 @@
 @section('title', 'My Account')
 
 @section('main')
+    <h1 class="text-center">Your Reservations</h1>
+
     {{-- <div>
         <ul>
             <li><a @if($currentPage != 1) href="{{$pageQueryAdd($currentPage-1)}}" @endif>Prev</a></li>
@@ -13,10 +15,17 @@
         </ul>
     </div> --}}
 
-    @forelse ($booksData as $book)
-        @component('components.book-card', ["bookData" => $book])
-        @endcomponent
-    @empty
-        <div>No results</div>
-    @endforelse
+    <div class="books-container">
+        @foreach ($booksData as $book)
+            @component('components.book-card', ["bookData" => $book, "username" => $username])
+            @endcomponent
+        @endforeach
+    </div>
+        
+    @empty($booksData)
+        <div>
+            <h4>No Results Found</h4>
+            <img src="/graphics/no-search-results.svg" alt="No Results Graphic">
+        </div>
+    @endempty
 @endsection

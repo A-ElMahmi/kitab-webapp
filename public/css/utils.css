@@ -1,0 +1,32 @@
+.flex-list {
+    display: flex;
+    list-style-type: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.btn {
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    border: 0;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.btn.primary {
+    color: white;
+    background-color: var(--primary-blue);
+}
+
+.btn.secondary {
+    color: var(--primary-blue);
+    background-color: var(--secondary-blue);
+}
+
+.btn:disabled {
+    color: white;
+    background-color: var(--text-grey);
+}

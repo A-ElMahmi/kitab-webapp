@@ -15,7 +15,7 @@ class RequestProcessor {
         DB::connect();
         
         Blade::init();
-        Blade::share("loggedIn", $session->has("loggedIn"));
+        Blade::share("loggedIn", $session->has("loggedIn") ? "true" : "false");
 
         return $request;
     }
